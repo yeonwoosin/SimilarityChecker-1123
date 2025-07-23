@@ -9,13 +9,24 @@ public:
 	{
 		int RefStrCount = refStr.size();
 		int ChkCount = CheckStr.size();
-		int B = (RefStrCount > ChkCount ? ChkCount : RefStrCount);
-		int DiffCount = (RefStrCount > ChkCount ? RefStrCount - ChkCount : ChkCount - RefStrCount) ;
+		int B = getMin(RefStrCount, ChkCount);
+		int DiffCount = getDiffCount(RefStrCount, ChkCount);
 		if (B == 0) return 0;
-		int ret = (((double)1 - ((double)DiffCount / (double)B)) * MAX_VALUE);
+		int ret = calcDiffScore(DiffCount, B);
 		return ret;
 	}
 private:
+	int getMin(int a, int b) {
+		return (a > b ? b : a);
+	}
+	int getDiffCount(int a, int b)
+	{
+		return (a > b ? a - b : b - a);
+	}
+	int calcDiffScore(int diff, int b)
+	{
+		return (((double)1 - ((double)diff / (double)b)) * MAX_VALUE);
+	}
 	string refStr;
 	static const int MAX_VALUE = 60;
 };
